@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXPOSER. // Minimal Metadata Inspector & Sanitizer</title>
+  <meta name="description" content="Ultra-clean, privacy-first metadata exposer for images, audio, video, documents, and web URLs." />
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS for GPS map visualizer -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">EXPOSER<span style="color:var(--accent);">.</span></div>
+          <div class="brand-tagline">Minimal Metadata Inspector</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="badge client-side" title="All processing occurs 100% inside your browser. No files leave your machine.">Client-Side Only</span>
+        <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark / Light Mode" aria-label="Toggle Theme">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Two-Column Layout (Tools on Left, Sponsors on Right) -->
+    <div class="app-main-layout">
+      <div class="main-workspace">
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav" aria-label="Tool Modes">
+      <button class="tab-btn active" data-tab="files">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+        File Inspector
+      </button>
+      <button class="tab-btn" data-tab="web">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        Web & HTML
+      </button>
+      <button class="tab-btn" data-tab="sanitizer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        Privacy Sanitizer
+      </button>
+    </nav>
+
+    <!-- ── TAB 1: FILE INSPECTOR ─────────────────────────────── -->
+    <section id="tab-files" class="tab-panel active">
+      <!-- Drag and drop zone -->
+      <div id="dropzone" class="dropzone" tabindex="0">
+        <input type="file" id="fileInput" style="display:none;" />
+        <div class="dropzone-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </div>
+        <div class="dropzone-title">Drop any image, audio, video, or document here</div>
+        <div class="dropzone-sub">Supports JPEG (EXIF/GPS), PNG, WebP, MP3, WAV, MP4, PDF, Code, and binary formats.</div>
+        <div class="dropzone-kbd-hint">
+          <span>or click to browse</span>
+          <span>•</span>
+          <span>supports <kbd>Ctrl+V</kbd> clipboard paste</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB 2: WEB & HTML INSPECTOR ────────────────────────── -->
+    <section id="tab-web" class="tab-panel">
+      <div class="url-input-container">
+        <div class="input-row">
+          <input type="text" id="urlInput" class="text-input" placeholder="Enter webpage URL (e.g. https://github.com or https://news.ycombinator.com)..." />
+          <button id="inspectUrlBtn" class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Inspect URL
+          </button>
+        </div>
+
+        <div>
+          <span id="toggleHtmlArea" class="raw-html-toggle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+            Or paste raw HTML / &lt;head&gt; code directly
+          </span>
+          <textarea id="rawHtmlInput" class="html-textarea" placeholder="Paste HTML code here: <head><meta property='og:title' content='...'></head>"></textarea>
+          <div id="htmlParseActionRow" style="display:none; margin-top:10px;">
+            <button id="inspectHtmlBtn" class="btn">Parse HTML Snippet</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB 3: PRIVACY SANITIZER ──────────────────────────── -->
+    <section id="tab-sanitizer" class="tab-panel">
+      <div class="sanitizer-box">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <h2 style="font-family:var(--font-mono); font-size:16px; font-weight:500;">METADATA SCRUBBER & SANITIZER</h2>
+          <p style="font-size:13px; color:var(--text-secondary);">
+            Photos taken with smartphones and digital cameras frequently leak your exact GPS home coordinates, phone model, and serial numbers. Drop a photo here to instantly wipe all EXIF, GPS, and IPTC tags without quality loss.
+          </p>
+        </div>
+
+        <div id="sanitizerDropzone" class="dropzone" style="padding: 36px 20px;">
+          <input type="file" id="sanitizerFileInput" accept="image/*" style="display:none;" />
+          <div class="dropzone-icon" style="color:var(--emerald);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="dropzone-title">Drop an image here to sanitize</div>
+          <div class="dropzone-sub">Wipes GPS coordinates, camera serial numbers, and creator signatures locally.</div>
+          <button id="browseSanitizeBtn" class="btn btn-primary" style="margin-top: 6px;">Select Photo to Clean</button>
+        </div>
+
+        <div class="sanitizer-info-grid">
+          <div class="sanitizer-card">
+            <span class="sanitizer-card-title">100% In-Browser</span>
+            <p class="sanitizer-card-desc">Nothing ever leaves your computer. The image is rendered to an isolated canvas buffer and re-encoded cleanly.</p>
+          </div>
+          <div class="sanitizer-card">
+            <span class="sanitizer-card-title">Wipes Location Tags</span>
+            <p class="sanitizer-card-desc">Removes latitude, longitude, altitude, and timestamp records that expose where a photo was taken.</p>
+          </div>
+          <div class="sanitizer-card">
+            <span class="sanitizer-card-title">Hardware Fingerprints</span>
+            <p class="sanitizer-card-desc">Removes camera device IDs, lens serials, software versions, and editing histories.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── RESULTS CONTAINER ─────────────────────────────────── -->
+    <main id="resultsSection" class="results-section">
+
+      <!-- LEFT SIDEBAR: FILE SUMMARY & CONTROLS -->
+      <aside class="sidebar-panel">
+        <div class="file-preview-box" id="previewContainer">
+          <div class="file-preview-icon-placeholder" id="previewPlaceholder">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span style="font-family:var(--font-mono); font-size:11px;">Preview</span>
+          </div>
+          <img id="imagePreview" class="file-preview-img" style="display:none;" alt="File Preview" />
+          <video id="videoPreview" class="file-preview-video" controls style="display:none;"></video>
+          <audio id="audioPreview" controls style="display:none; width:90%; position:absolute; bottom:12px;"></audio>
+        </div>
+
+        <div class="file-meta-header">
+          <div id="fileTitle" class="file-name">filename.ext</div>
+          <div class="file-specs-pill" id="fileQuickSpecs">
+            <span class="spec-chip" id="chipSize">0 KB</span>
+            <span class="spec-chip" id="chipType">Unknown</span>
+          </div>
+        </div>
+
+        <!-- Privacy Status Alert -->
+        <div id="privacyAlert" class="privacy-alert safe">
+          <div class="privacy-alert-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span id="privacyAlertStatus">NO SENSITIVE DATA DETECTED</span>
+          </div>
+          <p id="privacyAlertDetails" style="font-size:11px; opacity:0.85;">No GPS coordinates or personal identity tags found in this file.</p>
+        </div>
+
+        <!-- Sidebar Action Buttons -->
+        <div class="sidebar-actions">
+          <button id="sanitizeCurrentBtn" class="btn btn-danger" style="width:100%; justify-content:center; display:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Strip Metadata & Download
+          </button>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+            <button id="exportJsonBtn" class="btn" title="Download as JSON" style="font-size:11px; justify-content:center;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              JSON
+            </button>
+            <button id="exportMdBtn" class="btn" title="Download Markdown Report" style="font-size:11px; justify-content:center;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              Markdown
+            </button>
+          </div>
+
+          <button id="copyAllBtn" class="btn" style="width:100%; justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy All to Clipboard
+          </button>
+
+          <button id="clearBtn" class="btn" style="width:100%; justify-content:center; color:var(--text-muted);">
+            Clear & Inspect Another
+          </button>
+        </div>
+      </aside>
+
+      <!-- RIGHT MAIN: METADATA INSPECTOR GROUPS -->
+      <section class="inspector-panel">
+
+        <!-- Inspector Toolbar (Search + Tag Counter) -->
+        <div class="inspector-toolbar">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="metadataSearch" placeholder="Filter metadata (e.g. ISO, Lens, GPS, Date, Duration)..." />
+          </div>
+          <div class="quick-stats" id="metadataCountBadge">0 tags exposed</div>
+        </div>
+
+        <!-- Dynamic Metadata Categories Container -->
+        <div id="metadataGroupsContainer" style="display:flex; flex-direction:column; gap:16px;">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Interactive Map (Shown only if GPS coordinates exist) -->
+        <div id="gpsGroup" class="meta-group" style="display:none;">
+          <div class="meta-group-header">
+            <div class="meta-group-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent);">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              GEOLOCATION / MAP RADAR
+            </div>
+            <span class="meta-group-count" id="gpsStatusBadge">COORDINATES FOUND</span>
+          </div>
+          <div class="gps-map-container">
+            <div id="gpsMap"></div>
+            <div class="gps-coords-display">
+              <span id="gpsCoordsText">0.0000° N, 0.0000° E</span>
+              <a id="osmExternalLink" href="#" target="_blank" rel="noopener noreferrer" style="color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                Open in OpenStreetMap ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Card Preview (Shown when URL or HTML is inspected) -->
+        <div id="socialPreviewGroup" class="meta-group" style="display:none;">
+          <div class="meta-group-header">
+            <div class="meta-group-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent);">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              SOCIAL MEDIA EMBED PREVIEW
+            </div>
+            <span class="meta-group-count">OpenGraph & Twitter Cards</span>
+          </div>
+          <div style="padding:18px;">
+            <div class="social-card">
+              <div class="social-card-header">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Twitter / X & LinkedIn Card Preview
+              </div>
+              <img id="socialCardImage" class="social-preview-image" src="" alt="Social Preview" style="display:none;" />
+              <div class="social-card-content">
+                <div id="socialCardDomain" class="social-card-domain">example.com</div>
+                <div id="socialCardTitle" class="social-card-title">Page Title</div>
+                <div id="socialCardDesc" class="social-card-desc">Page description preview...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+      </div> <!-- /.main-workspace -->
+
+      <!-- ── SPONSORS SIDEBAR (EXACT MATCH TO SCREENSHOT) ──────────────── -->
+      <aside class="sponsors-sidebar">
+        <div class="sponsors-header">
+          <span class="sponsors-title">SPONSORS</span>
+        </div>
+
+        <!-- Featured "$19/month" Ad Slot -->
+        <div class="sponsor-cta-card" id="openAdModalBtn" role="button" tabindex="0" title="Click to advertise here for $19/month">
+          <div class="sponsor-cta-title">Your ad here</div>
+          <div class="sponsor-cta-traffic">~50k visitors monthly</div>
+          <div class="sponsor-cta-price">$19/month</div>
+        </div>
+
+        <!-- Available Ad Slots -->
+        <div class="available-slots-container">
+          <div class="available-slot-card" role="button" tabindex="0" onclick="document.getElementById('openAdModalBtn').click()" title="Reserve this ad slot">
+            <div class="slot-plus-icon">+</div>
+            <div class="slot-info">
+              <span class="slot-label">Spot Available</span>
+              <span class="slot-rate">$19/month</span>
+            </div>
+          </div>
+          <div class="available-slot-card" role="button" tabindex="0" onclick="document.getElementById('openAdModalBtn').click()" title="Reserve this ad slot">
+            <div class="slot-plus-icon">+</div>
+            <div class="slot-info">
+              <span class="slot-label">Spot Available</span>
+              <span class="slot-rate">$19/month</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div> <!-- /.app-main-layout -->
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div>EXPOSER. // Minimalist Metadata Inspector</div>
+      <div>100% Client-Side • No Telemetry • Privacy First</div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Raw JSON View Modal -->
+  <div id="jsonModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Raw Metadata JSON</div>
+        <button id="closeJsonModal" class="icon-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre id="jsonModalContent" class="modal-code-block"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advertise Booking Modal -->
+  <div id="adModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title">Advertise on EXPOSER.</div>
+        <button id="closeAdModal" class="icon-btn" aria-label="Close modal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="ad-modal-pricing-banner">
+          <div class="ad-modal-price">$19 <span>/ month</span></div>
+          <div class="ad-modal-traffic">~50k monthly visitors</div>
+        </div>
+
+        <div class="ad-modal-perks">
+          <div class="perk-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--emerald); flex-shrink:0;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Prominent sticky sidebar placement on every tool screen</span>
+          </div>
+          <div class="perk-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--emerald); flex-shrink:0;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Direct do-follow backlink with your logo and brand name</span>
+          </div>
+          <div class="perk-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--emerald); flex-shrink:0;">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Instant 24h setup & month-to-month flexibility</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+          <a href="mailto:sponsor@exposer.dev?subject=Ad%20Booking%20Inquiry%20($19/month)&body=Hi,%20I'd%20like%20to%20reserve%20a%20sponsor%20spot%20for%20$19/month%20on%20EXPOSER.%0A%0ABrand%20Name:%0AWebsite%20URL:%0ALogo%20Link:" class="btn btn-primary" style="justify-content:center; text-decoration:none; padding:11px;">
+            Reserve Spot ($19/mo) ↗
+          </a>
+          <button id="copyAdEmailBtn" class="btn" style="justify-content:center;">
+            Copy Contact Email (sponsor@exposer.dev)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS for interactive OpenStreetMap GPS pin -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Exifr: Fast & comprehensive client-side EXIF/IPTC/XMP/GPS image reader -->
+  <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+
+  <!-- jsmediatags: ID3 Audio metadata reader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+
+  <!-- pdf-lib: PDF metadata parser -->
+  <script src="https://unpkg.com/pdf-lib@1.17.9/dist/pdf-lib.min.js"></script>
+
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
