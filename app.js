@@ -1061,8 +1061,8 @@
 
     if (copyAdEmailBtn) {
       copyAdEmailBtn.addEventListener('click', () => {
-        copyToClipboard('sponsor@exposer.dev');
-        showToast('Copied sponsor email: sponsor@exposer.dev');
+        copyToClipboard('branqomedia@gmail.com');
+        showToast('Copied sponsor email: branqomedia@gmail.com');
       });
     }
   }
