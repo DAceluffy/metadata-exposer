@@ -3,8 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EXPOSER. // Minimal Metadata Inspector & Sanitizer</title>
-  <meta name="description" content="Ultra-clean, privacy-first metadata exposer for images, audio, video, documents, and web URLs." />
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>EXPOSER. — Free Online Metadata Viewer, EXIF Inspector & Privacy Sanitizer</title>
+  <meta name="title" content="EXPOSER. — Free Online Metadata Viewer, EXIF Inspector & Privacy Sanitizer" />
+  <meta name="description" content="Free online metadata viewer and EXIF stripper. Inspect hidden EXIF, GPS location coordinates, audio ID3 tags, and PDF metadata in your browser. 100% private, client-side execution." />
+  <meta name="keywords" content="online metadata viewer, exif viewer online, metadata exposer, remove photo metadata, photo gps location finder, audio id3 tag viewer, pdf metadata checker, strip exif online, privacy metadata cleaner, inspect photo metadata online, extract exif data, check image location" />
+  <meta name="author" content="EXPOSER" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#09090b" />
+  <link rel="canonical" href="https://daceluffy.github.io/metadata-exposer/" />
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://daceluffy.github.io/metadata-exposer/" />
+  <meta property="og:title" content="EXPOSER. — Free Online Metadata Viewer & EXIF Stripper" />
+  <meta property="og:description" content="Inspect hidden EXIF, GPS coordinates, audio ID3 tags, and PDF attributes online. 100% client-side privacy tool with zero server uploads." />
+  <meta property="og:image" content="https://daceluffy.github.io/metadata-exposer/sample_photo_with_gps.jpg" />
+  <meta property="og:site_name" content="EXPOSER." />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://daceluffy.github.io/metadata-exposer/" />
+  <meta name="twitter:title" content="EXPOSER. — Free Online Metadata Viewer & EXIF Stripper" />
+  <meta name="twitter:description" content="Inspect hidden EXIF, GPS coordinates, audio ID3 tags, and PDF attributes online. 100% private in-browser tool." />
+  <meta name="twitter:image" content="https://daceluffy.github.io/metadata-exposer/sample_photo_with_gps.jpg" />
+
+  <!-- Schema.org JSON-LD Structured Data (Google Rich Snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://daceluffy.github.io/metadata-exposer/#webapp",
+        "name": "EXPOSER. Metadata Inspector",
+        "url": "https://daceluffy.github.io/metadata-exposer/",
+        "description": "Free client-side online metadata viewer, EXIF inspector, GPS location radar, and privacy metadata stripper for images, audio, video, and documents.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Image EXIF and IPTC extraction",
+          "GPS photo location radar with interactive map",
+          "Audio ID3 tag reader with album artwork preview",
+          "PDF and document metadata inspector",
+          "One-click client-side EXIF sanitizer and metadata stripper",
+          "Real-time SHA-256 cryptographic checksum calculation"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://daceluffy.github.io/metadata-exposer/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How can I view EXIF metadata online without uploading files to a server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EXPOSER runs 100% client-side inside your browser. When you drop a photo, audio file, or document, the browser parses the file headers locally using JavaScript and Web APIs. No file content or metadata is ever transmitted over the network."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can photo metadata reveal where a picture was taken?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Most modern smartphones and cameras embed GPS coordinates (latitude, longitude, and altitude) in EXIF tags. EXPOSER extracts these coordinates and shows you the exact pin on an interactive OpenStreetMap radar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I strip or remove metadata from images for free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use EXPOSER's Privacy Sanitizer tab. Drop your image and click 'Strip Metadata & Download'. The image is rendered to a local HTML5 canvas buffer which strips all EXIF, IPTC, and location records, downloading a clean, privacy-safe image."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What file formats does EXPOSER support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EXPOSER supports Images (JPEG, PNG, WebP, GIF, TIFF, SVG, HEIC), Audio (MP3, WAV, FLAC, OGG, M4A), Video (MP4, WebM, MOV), Documents (PDF, TXT, JSON, CSV), and Web URLs / raw HTML head code."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Inspect and Remove Metadata from Photos Online",
+        "description": "Step-by-step guide to inspect hidden EXIF data and strip location tags from your files using EXPOSER.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Select or Drop File",
+            "text": "Drag and drop any photo, audio track, video, or document into the dropzone or press Ctrl+V to paste directly from clipboard."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Inspect Hidden Metadata",
+            "text": "Review camera optical specs (ISO, aperture, shutter), GPS coordinates, author tags, and cryptographic SHA-256 hashes."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Sanitize or Export",
+            "text": "Click 'Strip Metadata & Download' to generate a clean photo without EXIF/GPS, or export the full report as JSON or Markdown."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -334,6 +450,118 @@
       </section>
 
     </main>
+
+        <!-- ── SEMANTIC SEO KNOWLEDGE BASE & FAQ ──────────────── -->
+        <article class="seo-section">
+          <header class="seo-header">
+            <h2 class="seo-title">The Private, In-Browser Metadata Inspector & EXIF Stripper</h2>
+            <p class="seo-subtitle">
+              Every digital photo, audio file, and document contains hidden metadata that reveals sensitive personal data—from exact GPS home coordinates and camera hardware serials to author identities. EXPOSER is built to expose and sanitize this data 100% client-side with zero tracking.
+            </p>
+          </header>
+
+          <!-- 4 Core Capabilities Grid -->
+          <div class="seo-feature-grid">
+            <div class="seo-feature-card">
+              <div class="seo-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <h3 class="seo-card-title">Image EXIF & GPS Radar</h3>
+              <p class="seo-card-text">
+                Extract Exchangeable Image File Format (EXIF), IPTC, and XMP tags. Inspect camera model, lens optics, focal length, ISO, exposure time, and map exact physical GPS coordinates on an interactive radar pin.
+              </p>
+            </div>
+
+            <div class="seo-feature-card">
+              <div class="seo-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 class="seo-card-title">Privacy EXIF Sanitizer</h3>
+              <p class="seo-card-text">
+                Strip GPS coordinates, device serial numbers, and software signatures with a single click. Uses an isolated HTML5 canvas buffer to re-encode clean, lightweight images before sharing online.
+              </p>
+            </div>
+
+            <div class="seo-feature-card">
+              <div class="seo-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 18V5l12-2v13"></path>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+              </div>
+              <h3 class="seo-card-title">Audio ID3 & Video Specs</h3>
+              <p class="seo-card-text">
+                Inspect MP3, WAV, and FLAC files for title, artist, album, year, and embedded cover art. Analyze video files (MP4, WebM) for exact resolution, aspect ratios, and duration.
+              </p>
+            </div>
+
+            <div class="seo-feature-card">
+              <div class="seo-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+              </div>
+              <h3 class="seo-card-title">PDF & Code Integrity</h3>
+              <p class="seo-card-text">
+                Audit document author, creator software, modification timestamps, and page counts. Generate instant SHA-256 and SHA-1 cryptographic checksums using native Web Crypto APIs.
+              </p>
+            </div>
+          </div>
+
+          <!-- Frequently Asked Questions (FAQ) Section -->
+          <div class="seo-faq-section">
+            <h3 class="seo-faq-heading">Frequently Asked Questions</h3>
+            
+            <div class="faq-accordion">
+              <details class="faq-item" open>
+                <summary class="faq-question">
+                  <span>How can I view EXIF metadata online without uploading files to a server?</span>
+                  <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </summary>
+                <div class="faq-answer">
+                  <p>EXPOSER executes 100% client-side inside your web browser. When you select or drag a file, the browser's JavaScript engine reads the binary byte stream directly into local memory. Your files are never uploaded to any remote server or cloud, ensuring total confidentiality.</p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Can photo metadata reveal where a picture was taken?</span>
+                  <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </summary>
+                <div class="faq-answer">
+                  <p>Yes. Smartphones (iPhones, Android devices) and digital cameras record latitude, longitude, and altitude in EXIF tags. If uploaded without sanitization, anyone can extract these coordinates and pinpoint your home, workplace, or travel locations. EXPOSER identifies these coordinates and plots them on an interactive radar map.</p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>How do I strip or remove metadata from images for free?</span>
+                  <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </summary>
+                <div class="faq-answer">
+                  <p>Switch to the <strong>Privacy Sanitizer</strong> tab, drop your photo, and click <strong>"Strip Metadata & Download"</strong>. The tool renders your image onto an isolated in-browser canvas buffer and re-exports it without any EXIF, GPS, or camera hardware serial numbers.</p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>What file formats does EXPOSER support?</span>
+                  <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </summary>
+                <div class="faq-answer">
+                  <p>EXPOSER supports all major multimedia and document formats: Images (JPEG, PNG, WebP, GIF, TIFF, SVG, HEIC), Audio (MP3, WAV, FLAC, OGG, M4A), Video (MP4, WebM, MOV), Documents (PDF, TXT, JSON, CSV), and Web URLs / HTML &lt;head&gt; tags (OpenGraph, Twitter Cards, Schema.org).</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </article>
       </div> <!-- /.main-workspace -->
 
       <!-- ── SPONSORS SIDEBAR (EXACT MATCH TO SCREENSHOT) ──────────────── -->

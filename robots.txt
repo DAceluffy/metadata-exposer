@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daceluffy.github.io/metadata-exposer/sitemap.xml
