@@ -1,0 +1,15 @@
+# EXPOSER
+
+> Free, 100% client-side online metadata viewer, EXIF inspector, GPS location radar, and privacy sanitizer for images, audio, video, and documents.
+
+EXPOSER runs entirely in the browser using HTML5 Web APIs and JavaScript with zero server uploads or telemetry.
+
+## Tools and Features
+
+- [Web Application](https://daceluffy.github.io/metadata-exposer/): In-browser metadata inspector, GPS radar, and EXIF sanitizer tool.
+- [Sample Photo](https://daceluffy.github.io/metadata-exposer/sample_photo_with_gps.jpg): Sample JPEG test image with embedded EXIF and GPS tags.
+
+## Documentation
+
+- [Project Documentation](https://github.com/daceluffy/metadata-exposer/blob/main/README.md): Technical documentation, supported formats, and verification guides.
+- [Source Code](https://github.com/daceluffy/metadata-exposer): GitHub open-source code repository.

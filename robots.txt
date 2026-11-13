@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
 
+# AI Crawlers & Agents (Search & GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://daceluffy.github.io/metadata-exposer/sitemap.xml
